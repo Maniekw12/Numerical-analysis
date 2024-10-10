@@ -21,6 +21,7 @@ def analyze_errors(x,h_values,function, function_derivate):
     errors_in_function_a = []
     errors_in_function_b = []
 
+
     for h in h_values:
         """Przyblizone wartosci pochodnych na podstawie 
             funkcji a, b"""
@@ -38,25 +39,30 @@ def analyze_errors(x,h_values,function, function_derivate):
     return errors_in_function_a,errors_in_function_b
 
 
+#############main##################
+x = 10
 x = 0.2
 
+
+
 """Bledy dla Double"""
-h_values_Double64 = np.logspace(-10, 0, 100)  # Od 10^-10 do 1
+h_values_Double64 = np.logspace(-18, 0, 100,dtype=np.float64)
 errors_a_64, errors_b_64 = analyze_errors(x,h_values_Double64,f,f_derivate)
 
 """Bledy dla Float"""
-h_values_float32 = h_values_Double64.astype(np.float32)
+h_values_float32 = list(h_values_Double64.astype(np.float32))
 errors_a_32, errors_b_32 = analyze_errors(x,h_values_float32,f,f_derivate)
 
 """Rysowanie wykresu"""
 plt.figure(figsize=(10, 6))
+
 plt.loglog(h_values_Double64, errors_a_64, 'b-', label="(A) Double(64)", markersize=4)
 plt.loglog(h_values_Double64, errors_b_64, 'r-', label="(B) Double(64)", markersize=4)
 plt.loglog(h_values_float32, errors_a_32, 'g--', label="(A) Float(32)", markersize=4)
 plt.loglog(h_values_float32, errors_b_32, 'm--', label="(B) Float(32)", markersize=4)
 
 plt.xlabel('h')
-plt.ylabel('Error |Dh f(x) - f\'(x)|')
+plt.ylabel('E(h) |Dh f(x) - f\'(x)|')
 plt.title('Error Analysis for Derivative Approximations')
 plt.legend()
 plt.grid(True)
