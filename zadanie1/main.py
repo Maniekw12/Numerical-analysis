@@ -44,14 +44,13 @@ def analyze_errors(x, h_values, function, function_derivate):
 
 #############main##################
 x = 0.2
-
 """Bledy dla Double - sin(x^3)"""
 h_values_Double64 = np.logspace(-18, 0, 100, dtype=np.float64)
 errors_a_64, errors_b_64 = analyze_errors(x, h_values_Double64, f1, f1_derivate)
 
 """Bledy dla Float - sin(x^3)"""
 h_values_float32 = list(h_values_Double64.astype(np.float32))
-errors_a_32, errors_b_32 = analyze_errors(x, h_values_float32, f1, f1_derivate)
+errors_a_32, errors_b_32 = analyze_errors(np.float32(x), h_values_float32, f1, f1_derivate)
 
 """Bledy dla Double - cos(x^3)"""
 h_values_Double64_2 = np.logspace(-18, 0, 100, dtype=np.float64)
@@ -59,7 +58,7 @@ errors_a_64_2, errors_b_64_2 = analyze_errors(x, h_values_Double64_2, f2, f2_der
 
 """Bledy dla Float - cos(x^3)"""
 h_values_float32_2 = list(h_values_Double64_2.astype(np.float32))
-errors_a_32_2, errors_b_32_2 = analyze_errors(x, h_values_float32_2, f2, f2_derivate)
+errors_a_32_2, errors_b_32_2 = analyze_errors(np.float32(x), h_values_float32_2, f2, f2_derivate)
 
 """Rysowanie wykresu"""
 plt.figure(figsize=(12, 12))
@@ -80,8 +79,8 @@ plt.grid(True)
 """wykres dla 2 funkcji"""
 plt.subplot(2, 1, 2)
 
-plt.loglog(h_values_Double64_2, errors_a_64_2, 'b-', label="(A) Double(64) cos(x^3)", markersize=4)
-plt.loglog(h_values_Double64_2, errors_b_64_2, 'r-', label="(B) Double(64) cos(x^3)", markersize=4)
+#plt.loglog(h_values_Double64_2, errors_a_64_2, 'b-', label="(A) Double(64) cos(x^3)", markersize=4)
+#plt.loglog(h_values_Double64_2, errors_b_64_2, 'r-', label="(B) Double(64) cos(x^3)", markersize=4)
 plt.loglog(h_values_float32_2, errors_a_32_2, 'g--', label="(A) Float(32) cos(x^3)", markersize=4)
 plt.loglog(h_values_float32_2, errors_b_32_2, 'm--', label="(B) Float(32) cos(x^3)", markersize=4)
 
