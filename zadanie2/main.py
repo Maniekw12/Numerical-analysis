@@ -1,58 +1,38 @@
 import numpy as np
 
+A1 = np.array([
+    [5.8267103432, 1.0419816676, 0.4517861296, -0.2246976350, 0.7150286064],
+    [1.0419816676, 5.8150823499, -0.8642832971, 0.6610711416, -0.3874139415],
+    [0.4517861296, -0.8642832971, 1.5136472691, -0.8512078774, 0.6771688230],
+    [-0.2246976350, 0.6610711416, -0.8512078774, 5.3014166511, 0.5228116055],
+    [0.7150286064, -0.3874139415, 0.6771688230, 0.5228116055, 3.5431433879]])
+
+A2 = np.array([
+    [5.4763986379, 1.6846933459, 0.3136661779, -1.0597154562, 0.0083249547],
+    [1.6846933459, 4.6359087874, -0.6108766748, 2.1930659258, 0.9091647433],
+    [0.3136661779, -0.6108766748, 1.4591897081, -1.1804364456, 0.3985316185],
+    [-1.0597154562, 2.1930659258, -1.1804364456, 3.3110327980, -1.1617171573],
+    [0.0083249547, 0.9091647433, 0.3985316185, -1.1617171573, 2.1174700695]])
 
 
 
-#A1 = np.array([[2.40827208, -0.36066254, 0.80575445, 0.46309511, 1.20708553])
-#
-#
-#A2 = np.array([[2.61370745, -0.6334453, 0.76061329, 0.24938964, 0.82783473],
-#              [-0.6334453, 1.51060349, 0.08570081, 0.31048984, -0.53591589],
-#              [0.76061329, 0.08570081, 2.46956812, 0.18519926, 0.13060923],
-#              [0.24938964, 0.31048984, 0.18519926, 2.27845311, -0.54893124],
-#              [0.82783473, -0.53591589, 0.13060923, -0.54893124, 2.6276678]])
-#
-#
-#b = np.array([5.40780228, 3.67008677, 3.12306266, -1.11187948, 0.54437218])
-#
-#
-#bp = np.array([0.000001, 0, 0, 0, 0])
-#bp = bp + b
-#
-#
-#y1 = np.linalg.solve(A1, b)
-#y2 = np.linalg.solve(A2, b)
-#yp1 = np.linalg.solve(A2, bp)
-#yp2 = np.linalg.solve(A2, bp)
-#
-#
-#
-#print("Equations without perturbation")
-#print("y1: ", y1)
-#print("y2: ", y2)
-#print("")
-#
-#print("Equations with perturbation")
-#print("y1: ", yp1)
-#print("y2: ", yp2)
-#print("")
-#
-#
-#d1 = np.linalg.norm(y1-yp1)
-#d2 = np.linalg.norm(y2-yp2)
-#
-#print("delta1: ", d1)
-#
-#d2='{:.20f}'.format(d2)
-#
-#print("delta2: ", d2)
-#print('\n')
-#
-#
-#print("matrix conditioning coefficient for A1: ")
-#print(np.linalg.cond(A1))
-#print("matrix conditioning coefficient for A2: ")
-#print(np.linalg.cond(A2))
-#
-#
-#
+b = np.array([-2.8634904630, -4.8216733374, -4.2958468309, -0.0877703331, -2.0223464006]).reshape(-1, 1)
+
+"""Rozwiazauje uklady dla niezaburzonych form macierzy"""""
+y1 = np.linalg.solve(A1, b)
+y2 = np.linalg.solve(A2, b)
+
+delta_b = np.random.randn(5)  #generuje losowy wektor
+vector_norm = np.linalg.norm(delta_b) #licze jego norme
+desired_norm = 0.1*0.1*0.1*0.1*0.1*0.1 #Norma ktorej bedziemy chcieli to 10^-6
+
+scaled_delta_b = delta_b * (desired_norm/vector_norm) #skaluje wektor
+b_perturbed = b + delta_b.reshape(-1, 1)
+
+
+y1_perturbed = np.linalg.solve(A1, b_perturbed)  # rozwiazuje zaburzone rownania
+y2_perturbed = np.linalg.solve(A2, b_perturbed)  #
+
+print("y1")
+print(y1)
+print(y1_perturbed)
