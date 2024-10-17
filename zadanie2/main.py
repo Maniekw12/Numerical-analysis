@@ -32,7 +32,15 @@ b_perturbed = b + delta_b.reshape(-1, 1)
 
 y1_perturbed = np.linalg.solve(A1, b_perturbed)  # rozwiazuje zaburzone rownania
 y2_perturbed = np.linalg.solve(A2, b_perturbed)  #
+print("uwarunkowanie macierzy 1: "+ str(np.linalg.cond(A1)))
+print("uwarunkowanie macierzy 2: "+ str(np.linalg.cond(A2)))
 
-print("y1")
+print("Wynik dla A1y=b\n")
 print(y1)
+print("Wynik dla A2y=b\n")
+print(y2)
+print("------------Wyniki dla zaburzonych wartosci------------")
+print("Wynik dla A1y=b\n")
 print(y1_perturbed)
+print("Wynik dla A2y=b\n")
+print(y2_perturbed)
