@@ -79,8 +79,8 @@ plt.grid(True)
 """wykres dla 2 funkcji"""
 plt.subplot(2, 1, 2)
 
-#plt.loglog(h_values_Double64_2, errors_a_64_2, 'b-', label="(A) Double(64) cos(x^3)", markersize=4)
-#plt.loglog(h_values_Double64_2, errors_b_64_2, 'r-', label="(B) Double(64) cos(x^3)", markersize=4)
+plt.loglog(h_values_Double64_2, errors_a_64_2, 'b-', label="(A) Double(64) cos(x^3)", markersize=4)
+plt.loglog(h_values_Double64_2, errors_b_64_2, 'r-', label="(B) Double(64) cos(x^3)", markersize=4)
 plt.loglog(h_values_float32_2, errors_a_32_2, 'g--', label="(A) Float(32) cos(x^3)", markersize=4)
 plt.loglog(h_values_float32_2, errors_b_32_2, 'm--', label="(B) Float(32) cos(x^3)", markersize=4)
 

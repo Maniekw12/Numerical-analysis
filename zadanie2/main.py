@@ -22,12 +22,10 @@ b = np.array([-2.8634904630, -4.8216733374, -4.2958468309, -0.0877703331, -2.022
 y1 = np.linalg.solve(A1, b)
 y2 = np.linalg.solve(A2, b)
 
-delta_b = np.random.randn(5)  #generuje losowy wektor
-vector_norm = np.linalg.norm(delta_b) #licze jego norme
-desired_norm = 0.1*0.1*0.1*0.1*0.1*0.1 #Norma ktorej bedziemy chcieli to 10^-6
-
-scaled_delta_b = delta_b * (desired_norm/vector_norm) #skaluje wektor
-b_perturbed = b + delta_b.reshape(-1, 1)
+desired_norm = 1e-6
+delta_b = np.random.randn(5)
+scaled_delta_b = delta_b * (desired_norm / np.linalg.norm(delta_b))
+b_perturbed = b + scaled_delta_b.reshape(-1, 1)
 
 
 y1_perturbed = np.linalg.solve(A1, b_perturbed)  # rozwiazuje zaburzone rownania
