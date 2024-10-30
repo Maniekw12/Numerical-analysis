@@ -60,20 +60,19 @@ for i in sizes:
     times.append(final_time)
 
 
-plt.figure(figsize=(12, 6))  # Opcjonalne: ustawienie rozmiaru wykresu
+plt.figure(figsize=(12, 6))
 
 plt.plot(sizes, times,
-         marker='o',          # Kropki jako markery
-         linestyle='-',       # Ciągła linia
-         markersize=5,        # Rozmiar kropek
-         color='#0088FE',     # Kolor niebieski
-         linewidth=0)         # Grubość linii
+         marker='o',
+         linestyle='-',
+         markersize=5,
+         color='#0088FE',
+         linewidth=0)
 
 plt.xlabel('Rozmiar danych')
 plt.ylabel('Czas wykonania (sekundy)')
-plt.grid(True, linestyle='--', alpha=0.7)  # Siatka z przerywaną linią
+plt.grid(True, linestyle='--', alpha=0.7)
 
-# Ustawienie marginesów, żeby punkty nie były przy krawędzi
 plt.margins(x=0.02)
 
 plt.show()
