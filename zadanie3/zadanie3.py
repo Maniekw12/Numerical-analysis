@@ -1,17 +1,17 @@
 from functools import reduce
-import numpy as np
 import time
-
+import matplotlib.pyplot as plt
 
 def LU4D(n):
     # Uzupełnienie diagonali macierzy A
     matrix = []
-    matrix.append([0] + [0.2] * (n - 1))  # Dolna diagonalna (pod główną)
-    matrix.append([1.2] * n)  # Główna diagonalna
-    matrix.append([0.1 / i for i in range(1, n)] + [0])  # Górna diagonalna (nad główną)
-    matrix.append([0.4 / i ** 2 for i in range(1, n - 1)] + [0] + [0])  # Druga górna diagonalna
 
-    # Stworzenie wektora wyrazów wolnych
+    matrix.append([0] + [0.3] * (n - 1))  # Dolna diagonalna (pod główną)
+    matrix.append([1.01] * n)  # Główna diagonalna
+
+    matrix.append([0.2 / i for i in range(1, n)] + [0])  # Górna diagonalna (nad główną)
+    matrix.append([0.15 / i ** 2 for i in range(1, n - 1)] + [0] + [0])  # Druga górna diagonalna
+
     x = list(range(1, n + 1))
 
     # Rozkład LU
@@ -44,17 +44,38 @@ def LU4D(n):
     return x, wyznacznik
 
 
+N = 11000
+times = []
+sizes = [i for i in range(5, N + 1,100)]
 
-n= 300
-#dodajemy pierwsza poddiabgonale o n elementach
-#mamy teraz macierz 4x4 gdzie
-#[0] - pierwsza diagonala
-#[1] - diagonala
-#[2] - trzecia diaboanala
-#[3] - czwarta daigonala
+print(sizes)
+
+for i in sizes:
+
+    start_time = time.time()
+    LU4D(i)
+    end_time = time.time()
+
+    final_time = end_time-start_time
+    times.append(final_time)
 
 
-x, determinant = LU4D(n)
-print("Szukane rozwiązanie to: ", x)
-print()
-print("Wyznacznik macierzy A = ", determinant)
+plt.figure(figsize=(12, 6))  # Opcjonalne: ustawienie rozmiaru wykresu
+
+plt.plot(sizes, times,
+         marker='o',          # Kropki jako markery
+         linestyle='-',       # Ciągła linia
+         markersize=5,        # Rozmiar kropek
+         color='#0088FE',     # Kolor niebieski
+         linewidth=0)         # Grubość linii
+
+plt.xlabel('Rozmiar danych')
+plt.ylabel('Czas wykonania (sekundy)')
+plt.grid(True, linestyle='--', alpha=0.7)  # Siatka z przerywaną linią
+
+# Ustawienie marginesów, żeby punkty nie były przy krawędzi
+plt.margins(x=0.02)
+
+plt.show()
+
+
