@@ -2,53 +2,61 @@ from functools import reduce
 import time
 import matplotlib.pyplot as plt
 
+
 def LU4D(n):
-    # Uzupełnienie diagonali macierzy A
     matrix = []
-
-    matrix.append([0] + [0.3] * (n - 1))  # Dolna diagonalna (pod główną)
-    matrix.append([1.01] * n)  # Główna diagonalna
-
-    matrix.append([0.2 / i for i in range(1, n)] + [0])  # Górna diagonalna (nad główną)
-    matrix.append([0.15 / i ** 2 for i in range(1, n - 1)] + [0] + [0])  # Druga górna diagonalna
+    matrix.append([0] + [0.3] * (n - 1))  # Lower diagonal
+    matrix.append([1.01] * n)  # Main diagonal
+    matrix.append([0.2 / i for i in range(1, n)] + [0])  # Upper diagonal
+    matrix.append([0.15 / (i * i * i) for i in range(1, n - 1)] + [0] + [0])  # Second upper diagonal
 
     x = list(range(1, n + 1))
 
-    # Rozkład LU
-    for i in range(1, n - 2):
-        matrix[0][i] = matrix[0][i] / matrix[1][i - 1]
-        matrix[1][i] = matrix[1][i] - matrix[0][i] * matrix[2][i - 1]
-        matrix[2][i] = matrix[2][i] - matrix[0][i] * matrix[3][i - 1]
 
-    matrix[0][n - 2] = matrix[0][n - 2] / matrix[1][n - 3]
-    matrix[1][n - 2] = matrix[1][n - 2] - matrix[0][n - 2] * matrix[2][n - 3]
-    matrix[2][n - 2] = matrix[2][n - 2] - matrix[0][n - 2] * matrix[3][n - 3]
+    i= 0
+    while(i < n):
+        if(i==0):
+            matrix[0][i] = matrix
 
-    matrix[0][n - 1] = matrix[0][n - 1] / matrix[1][n - 2]
-    matrix[1][n - 1] = matrix[1][n - 1] - matrix[0][n - 1] * matrix[2][n - 2]
+        elif(i == n-2):
+            matrix[0][n - 2] = matrix[0][n - 2] / matrix[1][n - 3]
+            matrix[1][n - 2] = matrix[1][n - 2] - matrix[0][n - 2] * matrix[2][n - 3]
+            matrix[2][n - 2] = matrix[2][n - 2] - matrix[0][n - 2] * matrix[3][n - 3]
+        elif(i == n-1):
+            matrix[0][n - 1] = matrix[0][n - 1] / matrix[1][n - 2]
+            matrix[1][n - 1] = matrix[1][n - 1] - matrix[0][n - 1] * matrix[2][n - 2]
+        else:
+            matrix[0][i] = matrix[0][i] / matrix[1][i - 1]
+            matrix[1][i] = matrix[1][i] - matrix[0][i] * matrix[2][i - 1]
+            matrix[2][i] = matrix[2][i] - matrix[0][i] * matrix[3][i - 1]
+        i +=1
 
-    # Podstawianie w przód
     for i in range(1, n):
         x[i] = x[i] - matrix[0][i] * x[i - 1]
 
-    # Podstawiania w tył
     x[n - 1] = x[n - 1] / matrix[1][n - 1]
     x[n - 2] = (x[n - 2] - matrix[2][n - 2] * x[n - 1]) / matrix[1][n - 2]
 
     for i in range(n - 3, -1, -1):
         x[i] = (x[i] - matrix[3][i] * x[i + 2] - matrix[2][i] * x[i + 1]) / matrix[1][i]
+    determinant = reduce(lambda a, b: a * b, matrix[1])
 
-    # Obliczanie wartości wyznacznika macierzy
-    wyznacznik = reduce(lambda a, b: a * b, matrix[1])
-
-    return x, wyznacznik
+    return x, determinant
 
 
-N = 11000
+N = 300
 times = []
-sizes = [i for i in range(5, N + 1,100)]
+sizes = [i for i in range(5, N + 1,1)]
 
-print(sizes)
+
+
+wyznacznik, wynik = LU4D(300)
+print("Wyznacznik")
+print(wynik)
+print("MWynik")
+print(wyznacznik)
+
+
 
 for i in sizes:
 
@@ -65,16 +73,16 @@ plt.figure(figsize=(12, 6))
 plt.plot(sizes, times,
          marker='o',
          linestyle='-',
-         markersize=5,
-         color='#0088FE',
-         linewidth=0)
+          color="b")
 
 plt.xlabel('Rozmiar danych')
 plt.ylabel('Czas wykonania (sekundy)')
-plt.grid(True, linestyle='--', alpha=0.7)
-
-plt.margins(x=0.02)
-
+plt.grid(True)
 plt.show()
+
+
+
+
+
 
 
