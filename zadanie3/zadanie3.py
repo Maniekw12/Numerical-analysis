@@ -5,20 +5,17 @@ import matplotlib.pyplot as plt
 
 def LU4D(n):
     matrix = []
-    matrix.append([0] + [0.3] * (n - 1))  # Lower diagonal
-    matrix.append([1.01] * n)  # Main diagonal
-    matrix.append([0.2 / i for i in range(1, n)] + [0])  # Upper diagonal
-    matrix.append([0.15 / (i * i * i) for i in range(1, n - 1)] + [0] + [0])  # Second upper diagonal
+    matrix.append([0] + [0.3] * (n - 1))
+    matrix.append([1.01] * n)
+    matrix.append([0.2 / i for i in range(1, n)] + [0])
+    matrix.append([0.15 / (i * i * i) for i in range(1, n - 1)] + [0] + [0])
 
     x = list(range(1, n + 1))
 
 
-    i= 0
+    i= 1
     while(i < n):
-        if(i==0):
-            matrix[0][i] = matrix
-
-        elif(i == n-2):
+        if(i == n-2):
             matrix[0][n - 2] = matrix[0][n - 2] / matrix[1][n - 3]
             matrix[1][n - 2] = matrix[1][n - 2] - matrix[0][n - 2] * matrix[2][n - 3]
             matrix[2][n - 2] = matrix[2][n - 2] - matrix[0][n - 2] * matrix[3][n - 3]
@@ -52,9 +49,9 @@ sizes = [i for i in range(5, N + 1,1)]
 
 wyznacznik, wynik = LU4D(300)
 print("Wyznacznik")
-print(wynik)
-print("MWynik")
 print(wyznacznik)
+print("Wynik")
+print(wynik)
 
 
 
