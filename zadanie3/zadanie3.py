@@ -57,9 +57,9 @@ print(wynik)
 
 for i in sizes:
 
-    start_time = time.time()
+    start_time = time.perf_counter()
     LU4D(i)
-    end_time = time.time()
+    end_time = time.perf_counter()
 
     final_time = end_time-start_time
     times.append(final_time)
